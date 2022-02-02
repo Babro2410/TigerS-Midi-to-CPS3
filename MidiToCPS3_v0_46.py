@@ -19,12 +19,12 @@ Font_UI = "Century Gothic"
 #Tkinter design stuff, don't bother.
 
 root = Tk()
-root.title("TigerS - Midi to CPS3 music convertor - V.Alpha.Release.0.46. 14/12/2021") #Title of the window
+root.title("TigerS - Midi to CPS3 music convertor - V.Alpha.0.48") #Title of the window
 root.geometry("520x450") #Window size
 root.config(background= Dark_Olive_Slate) #window config
 root.resizable(0, 0) #can't resize window
 RawConverted_Text = Entry(root) #empty entry so it get's replaced every cycle
-root.iconbitmap(default="Resources/546967657253.Babro") #importing images
+root.iconbitmap(default='Resources/546967657253.Babro') #importing images
 Other_entry = Entry(root, state='readonly',width="30", bg=Light_Brown_Drab, fg=Light_Brown_Drab, highlightbackground=Light_Brown_Drab )
 Other_entry.place(relx = 0.27, rely = 0.18, anchor = CENTER)
 
@@ -538,7 +538,7 @@ def ConvertProcess (mid): #splitting the track chunk into the individual tracks 
 
             Delta_Total = 0
             Delta_Total_check = 0
-
+            Percussion_Boolean = 0
             Volume_warning = False
 
             for msg in track:
@@ -571,6 +571,33 @@ def ConvertProcess (mid): #splitting the track chunk into the individual tracks 
    
                         Data.append(Val_to_var_length (Previous_hold+Delta_time+Hold_increase,1)) #Release / Delta
                         Delta_Total_check = Delta_Total_check + Previous_hold+Delta_time+Hold_increase
+                        if Command_C4 == "00": #PERCUSSION INSTRUMENT SPLIT
+                            print (int(msg.note+Pitch_Change))
+                            if int(msg.note+Pitch_Change) == 46 :
+                                print("Hat open")
+                                if Percussion_Boolean != 4:
+                                    Data.append("C407") #Hat open
+                                    Percussion_Boolean = 4 #Hat open
+                            if 45 < int(msg.note+Pitch_Change) != 46 :
+                                print("Percussion")
+                                if Percussion_Boolean != 3:
+                                    Data.append("C406") #Snare 2
+                                    Percussion_Boolean = 3 #Snare 2
+                            if 45 > int(msg.note+Pitch_Change) > 38 :
+                                print("Hat closed")
+                                if Percussion_Boolean != 2:
+                                    Data.append("C405") #Hat closed
+                                    Percussion_Boolean = 2 #Hat closed
+                            if 35 < int(msg.note+Pitch_Change) <= 38 :
+                                print("Snare")
+                                if Percussion_Boolean != 1:
+                                    Data.append("C403") #Snare
+                                    Percussion_Boolean = 1 #Snare
+                            if int(msg.note+Pitch_Change) <= 35 :
+                                print("Kick") 
+                                if Percussion_Boolean != 0:
+                                    Data.append("C400") #Kick
+                                    Percussion_Boolean = 0 #Kick               
                         Data.append((str(hex(msg.velocity+volume_increase)))[2:].zfill(2)) #Volume       
                         
                         Data.append((str(hex(msg.note+Pitch_Change)))[2:].zfill(2)) #Pitch
@@ -642,7 +669,7 @@ def ConvertProcess (mid): #splitting the track chunk into the individual tracks 
     Final_Data = (List_Useless_remover(Data,3))
 
     out_of_range = False
-    for num_range in range(0,16): #makes a new note so that all songs end at the same delta.
+    for num_range in range(0,15): #makes a new note so that all songs end at the same delta.
         Delta_Sync.D_Dif[num_range] = Delta_Highest - Delta_Sync.D_tot[num_range]
         if out_of_range == False:
             print (f"Track {num_range} Delta Difference: {Delta_Sync.D_Dif[num_range]}")
@@ -708,7 +735,6 @@ def Poly_2_Mono_Window(): #POLY TO MONO WINDOW
     def Poly_2_Mono_converter(polymidi):
         NEW_Mid = MidiFile()
         Note_on_as_note_off = False
-        
         for i, track in enumerate(polymidi.tracks):
 
             Track_new = MidiTrack()
@@ -908,8 +934,8 @@ def Poly_2_Mono_Window(): #POLY TO MONO WINDOW
                         Track_new.append(msg)              
             
             NEW_Mid.tracks.append(Track_new)
-        save_file = filedialog.asksaveasfilename(initialdir = "/",title = "Select where to save your file.",defaultextension="*.mid" ,filetypes = (("midi files","*.mid"), ("all files","*.*")))
-        NEW_Mid.save(f"{save_file}")
+        save_file = filedialog.asksaveasfilename(initialdir = "/",title = "Select where to save your file.",filetypes = (("midi files","*.mid"), ("all files","*.*")))
+        NEW_Mid.save(f"{save_file}.mid")
         global saved_file_name
         saved_file_name = (f"{save_file}")
         TK_Message("Completed!\n\n(Results may still be unexpected)","")
@@ -928,7 +954,6 @@ def Poly_2_Mono_Window(): #POLY TO MONO WINDOW
             mono_midi_file_opened.seek(12)
             mono_midi_file_opened.write(poly_data_time_div)
             mono_midi_file_opened.close()    
-            
     except IndexError:
         messagebox.showerror(title="IndexError! (ERROR ID:16)", message="This MIDI is either in an incorrect format, or in a format not supported by this tool.")
 
@@ -959,7 +984,7 @@ toolbar.config(background=Blue_Salvia)
 b1 = Button(toolbar, text="Load",borderwidth= 0,width=7,bg= Blue_Salvia, fg= Dark_Olive_Slate, command= RawConvertor_fromfile)
 b1.pack(side=LEFT, padx=0, pady=0) #Load file
 
-b2_message = "Q: Which file format is currently supported?\nA: At the moment only .mid files.\n\nQ: I've got an error saying something about 'monophonic midis', what does it mean?\nA: 'Monophonic MIDIs' are a type of midi that essentially don't play 2 notes at the same time in the same track, CPS3 tracks use that form of sequence data, therefore it is only possible to convert those types of midi for now.\n\nQ:I've converted the midi and got a bunch of hex data, what do I do?\nA:The program outputs in the form of CPS3 raw music data, meaning that such data still needs to be pasted into file 10 and encrypted back.\n\nMORE STUFF NEEDS TO BE ADDED."
+b2_message = "Q: Which file format is currently supported?\nA: At the moment only .mid files.\n\nQ: I've got an error saying something about 'monophonic midis', what does it mean?\nA: 'Monophonic MIDIs' are a type of midi that essentially don't play 2 notes at the same time in the same track, CPS3 tracks use that form of sequence data, therefore it is only possible to convert those types of midi for now.\n\nQ:I've converted the midi and got a bunch of hex data, what do I do?\nA:The program outputs in the form of CPS3 raw music data, meaning that such data still needs to be pasted into file 10 and encrypted back."
 b2 = Button(toolbar, text="Help",borderwidth= 0,width=7,bg= Blue_Salvia, fg= Dark_Olive_Slate, command=lambda: TK_Message(b2_message,"Common questions & answers."))
 b2.pack(side=LEFT, padx=0, pady=0) #Help, QnA
 
