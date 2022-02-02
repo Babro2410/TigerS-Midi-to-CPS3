@@ -669,7 +669,7 @@ def ConvertProcess (mid): #splitting the track chunk into the individual tracks 
     Final_Data = (List_Useless_remover(Data,3))
 
     out_of_range = False
-    for num_range in range(0,15): #makes a new note so that all songs end at the same delta.
+    for num_range in range(0,16): #makes a new note so that all songs end at the same delta.
         Delta_Sync.D_Dif[num_range] = Delta_Highest - Delta_Sync.D_tot[num_range]
         if out_of_range == False:
             print (f"Track {num_range} Delta Difference: {Delta_Sync.D_Dif[num_range]}")
@@ -934,8 +934,8 @@ def Poly_2_Mono_Window(): #POLY TO MONO WINDOW
                         Track_new.append(msg)              
             
             NEW_Mid.tracks.append(Track_new)
-        save_file = filedialog.asksaveasfilename(initialdir = "/",title = "Select where to save your file.",filetypes = (("midi files","*.mid"), ("all files","*.*")))
-        NEW_Mid.save(f"{save_file}.mid")
+        save_file = filedialog.asksaveasfilename(initialdir = "/",title = "Select where to save your file.",defaultextension="*.mid" ,filetypes = (("midi files","*.mid"), ("all files","*.*")))
+        NEW_Mid.save(f"{save_file}")
         global saved_file_name
         saved_file_name = (f"{save_file}")
         TK_Message("Completed!\n\n(Results may still be unexpected)","")
