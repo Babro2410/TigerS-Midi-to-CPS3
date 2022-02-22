@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
+from tkinter import font
 from tkinter.font import BOLD
 from tkinter import ttk
 from mido import Message, MidiFile, MidiTrack, tempo2bpm
@@ -19,7 +20,7 @@ Font_UI = "Century Gothic"
 #Tkinter design stuff, don't bother.
 
 root = Tk()
-root.title("TigerS - Midi to CPS3 music convertor - V.Alpha.0.48 03/02/2022") #Title of the window
+root.title("TigerS - Midi to CPS3 music convertor - V.Alpha.0.50 22/02/2022") #Title of the window
 root.geometry("520x450") #Window size
 root.config(background= Dark_Olive_Slate) #window config
 root.resizable(0, 0) #can't resize window
@@ -745,6 +746,9 @@ def Poly_2_Mono_Window(): #POLY TO MONO WINDOW
             Previous_message_Delta = 0
             Extra_delta_add = 0
 
+            poly_2_mono_total_delta_original = 0
+            poly_2_mono_total_delta_converted = 0
+
             #if Default_tempo == False:
                 #Track_new.append(MetaMessage("set_tempo", tempo = 500000))
                 #Default_tempo = True
@@ -758,8 +762,10 @@ def Poly_2_Mono_Window(): #POLY TO MONO WINDOW
 
             for msg in track:
 
+                poly_2_mono_total_delta_original = poly_2_mono_total_delta_original + msg.time
+
                 if msg.type == "note_on": 
-                    print (msg.type)
+                    #print (msg.type)
                     if msg.velocity != 0:
                         #NOTE ON
                         if Note_off_pressed == True:
@@ -784,8 +790,8 @@ def Poly_2_Mono_Window(): #POLY TO MONO WINDOW
                                 Note_off_pressed = False
                                 last_false = "note_off"
 
-                            else:
-                                if msg.time != 0:
+                            else: #Note on while note on already pressed
+                                if msg.time+Extra_delta_add != 0:
                                     Track_new.append(Message("note_on", channel=Previous_channel, note=Previous_note, velocity=Previous_velocity, time=Previous_message_Delta))
                                     Track_new.extend(in_between_commands)
                                     if Note_on_as_note_off == True:
@@ -828,18 +834,20 @@ def Poly_2_Mono_Window(): #POLY TO MONO WINDOW
                                     Track_new.append(Message("note_on", channel=Previous_channel, note=Previous_note, velocity=Previous_velocity, time=Previous_message_Delta))
                                     Track_new.extend(in_between_commands)
                                     if Note_on_as_note_off == True:
-                                        Track_new.append(Message("note_on", channel=Previous_channel, note=Previous_note, velocity=0, time=msg.time))
+                                        Track_new.append(Message("note_on", channel=Previous_channel, note=Previous_note, velocity=0, time=msg.time+Extra_delta_add))
                                     else:
-                                        Track_new.append(Message("note_off", channel=Previous_channel, note=Previous_note, velocity=Previous_velocity, time=msg.time))
+                                        Track_new.append(Message("note_off", channel=Previous_channel, note=Previous_note, velocity=Previous_velocity, time=msg.time+Extra_delta_add))
                                     in_between_commands = []
                                     Previous_note = msg.note
                                     Previous_velocity = msg.velocity
                                     Previous_channel = msg.channel
                                     Previous_message_Delta = 0
 
+                                    Extra_delta_add = 0
+
                                     Note_on_pressed = True
                                     last_false = "note_off"       
-                            else:
+                            else:  
                                 #First ever note on
                                 Previous_note = msg.note
                                 Previous_velocity = msg.velocity
@@ -862,8 +870,10 @@ def Poly_2_Mono_Window(): #POLY TO MONO WINDOW
 
                                 Note_off_pressed = True
                                 Note_on_pressed = False
-
+                            else:
+                                Previous_message_Delta = Previous_message_Delta + msg.time
                             last_false = "note_on"
+
                         else:
                             #note off wrong note
                             if msg.time != 0:
@@ -873,7 +883,7 @@ def Poly_2_Mono_Window(): #POLY TO MONO WINDOW
                             last_false = "note_on"                                
 
                 elif msg.type == "note_off":
-                    print (msg.type)
+                    #print (msg.type)
                     #NOTE OFF
                     if msg.note == Previous_note:
                         #Note off right note
@@ -888,7 +898,12 @@ def Poly_2_Mono_Window(): #POLY TO MONO WINDOW
                             Note_off_pressed = True
                             Note_on_pressed = False
 
+                        else:
+                            Previous_message_Delta = msg.time + Extra_delta_add + Previous_message_Delta
+                            Extra_delta_add = 0
+
                         last_false = "note_on"
+
                     else:
                         #note off wrong note
                         if msg.time != 0:
@@ -898,7 +913,7 @@ def Poly_2_Mono_Window(): #POLY TO MONO WINDOW
                         last_false = "note_on"
 
                 elif msg.type == "end_of_track":
-                    print (msg.type)
+                    #print (msg.type)
                     if Note_on_pressed == True: #Note on pressed
                         Track_new.append(Message("note_on", channel=Previous_channel, note=Previous_note, velocity=Previous_velocity, time=Previous_message_Delta))
                         Track_new.extend(in_between_commands)
@@ -915,16 +930,13 @@ def Poly_2_Mono_Window(): #POLY TO MONO WINDOW
                         if Note_on_as_note_off == True:
                             Track_new.append(Message("note_on", channel=Previous_channel, note=Previous_note, velocity=0, time=Previous_message_Delta))
                         else:
-                            Track_new.append(Message("note_off", channel=Previous_channel, note=Previous_note, velocity=Previous_velocity, time=Previous_message_Delta))
+                            Track_new.append(Message("note_off", channel=Previous_channel, note=Previous_note, velocity=Previous_velocity, time=Previous_message_Delta+Extra_delta_add))
                         Track_new.extend(in_between_commands)
                         in_between_commands = []
 
                         msg.time = 0
 
-                        Track_new.append(msg)
-                    else:
-                        print(last_false)        
-
+                        Track_new.append(msg)        
                 else: #other commands
                     if Note_on_pressed == True: #Note on pressed
                         in_between_commands.append(msg)
@@ -934,6 +946,19 @@ def Poly_2_Mono_Window(): #POLY TO MONO WINDOW
                         Track_new.append(msg)              
             
             NEW_Mid.tracks.append(Track_new)
+
+            for msg_edit in Track_new:
+                poly_2_mono_total_delta_converted = poly_2_mono_total_delta_converted + msg_edit.time
+
+            print(f"Track's Original delta time: {poly_2_mono_total_delta_original}")
+
+            print(f"Track's Converted delta time: {poly_2_mono_total_delta_converted}")
+
+            if poly_2_mono_total_delta_original == poly_2_mono_total_delta_converted:
+                print ('\033[92m'+"NO DELTA DESYNC FOUND"+'\033[0m')
+            else:
+                print ('\033[91m'+"ERROR: DELTA TIMES DO NOT MATCH!"+'\033[0m')     
+
         save_file = filedialog.asksaveasfilename(initialdir = "/",title = "Select where to save your file.",defaultextension="*.mid" ,filetypes = (("midi files","*.mid"), ("all files","*.*")))
         NEW_Mid.save(f"{save_file}")
         global saved_file_name
@@ -969,9 +994,12 @@ def Midi_Analyzer():
     mid = MidiFile(buut)
 
     for i, track in enumerate(mid.tracks):
+        Total_delta_analysis = 0
         print('Track {}: {}'.format(i, track.name), file = stdout )
         for msg in track:
             print(msg, file = stdout )
+            Total_delta_analysis = Total_delta_analysis + msg.time
+            print((f"Current total Delta: {Total_delta_analysis}"), file = stdout )
 
 #VISUAL STUFF (buttons, entries, sliders etc.)
 
@@ -1047,6 +1075,95 @@ Track_Instrument_List = [
     Track_0_Instrument,Track_1_Instrument,Track_2_Instrument,Track_3_Instrument,Track_4_Instrument,Track_5_Instrument,Track_6_Instrument,Track_7_Instrument,Track_8_Instrument,Track_9_Instrument,Track_10_Instrument,Track_11_Instrument,Track_12_Instrument,Track_13_Instrument,Track_14_Instrument,Track_15_Instrument]
 Track_C6_Value_List = [
     Track_0_C6_Value,Track_1_C6_Value,Track_2_C6_Value,Track_3_C6_Value,Track_4_C6_Value,Track_5_C6_Value,Track_6_C6_Value,Track_7_C6_Value,Track_8_C6_Value,Track_9_C6_Value,Track_10_C6_Value,Track_11_C6_Value,Track_12_C6_Value,Track_13_C6_Value,Track_14_C6_Value,Track_15_C6_Value]
+
+def Volume_Equalizer_all_tracks(Entry):
+    try:
+        Error_status = False
+        Value = int(Entry.get())
+        for Track_volume in Track_Volume_List:
+            initial_value = int(Track_volume.get())
+            if (initial_value + Value) < 1:
+                Error_status = True
+            else:    
+                Track_volume.config(state="normal")
+                Track_volume.delete(0, END)
+                Track_volume.insert(END,(initial_value + Value))
+                Track_volume.config(state="readonly")
+        for Track_C6 in Track_C6_Value_List:
+            initial_value = int(Track_C6.get())
+            if (initial_value - Value) < 1:
+                Error_status = True
+            else:
+                Track_C6.config(state="normal")
+                Track_C6.delete(0, END)
+                Track_C6.insert(END,(initial_value - Value))
+                Track_C6.config(state="readonly")
+        if Error_status == True:
+            messagebox.showerror(title="Negative Volume values (EQ)! (ERROR ID:18)", message="No negative Volume values allowed, some tracks were left unchanged.")
+    except ValueError:
+        messagebox.showerror(title="Non-integer value detected! (EQ) (ERROR ID:20)", message="Please refrain from using anything but numbers.")        
+
+
+def Volume_Amplifier_all_tracks(Entry):
+    try:
+        Error_status = False
+        Value = int(Entry.get())
+        for Track_volume in Track_Volume_List:
+            initial_value = int(Track_volume.get())
+            if (initial_value + Value) < 1:
+                Error_status = True
+            else:
+                Track_volume.config(state="normal")
+                Track_volume.delete(0, END)
+                Track_volume.insert(END,(initial_value + Value))
+                Track_volume.config(state="readonly")
+        if Error_status == True:
+            messagebox.showerror(title="Negative Volume values (AMP)! (ERROR ID:19)", message="No negative Volume values allowed, some tracks were left unchanged.")
+    except ValueError:
+        messagebox.showerror(title="Non-integer value detected! (AMP) (ERROR ID:21)", message="Please refrain from using anything but numbers.")      
+
+
+def openNew_volume_Window():
+
+    newWindow_Volume = Toplevel(root)
+    newWindow_Volume.title("VolEdit")
+    newWindow_Volume.geometry("230x250")
+    newWindow_Volume.config(background= Dark_Olive_Slate) #window config
+    newWindow_Volume.resizable(0, 0) #can't resize window
+    newWindow_Volume.iconbitmap(default='Resources//546967657253.Babro') #importing images
+
+    Equalizer_volume = Label(newWindow_Volume, text="Equalizer:",bg= Dark_Olive_Slate, fg= Yellow_Sulphur)
+    Equalizer_volume.config(font=(Font_UI, 10, BOLD))
+    Equalizer_volume.place(relx = 0.5, rely = 0.15, anchor = CENTER)
+    
+
+    Equalizer_volume_Entry = Entry(newWindow_Volume, state="normal",font=(Font_UI, 13, BOLD),justify='center',bg = Blue_Salvia, highlightbackground=Yellow_Sulphur, fg = Dark_Olive_Slate)
+    Equalizer_volume_Entry.insert(END, "0")
+    Equalizer_volume_Entry.place(relx = 0.20, rely = 0.35, anchor = CENTER, width=60, height=35)
+
+    Equalizer_volume_Button = Button(newWindow_Volume, text="Apply EQ",font=(Font_UI, 9, BOLD),bg= Blue_Salvia, fg= Dark_Olive_Slate)
+    Equalizer_volume_Button.config(command= lambda: Volume_Equalizer_all_tracks(Equalizer_volume_Entry))
+    Equalizer_volume_Button.place(relx = 0.70, rely = 0.35, anchor = CENTER, height="35", width="90")
+
+
+    Amplifier_volume = Label(newWindow_Volume, text="Amplifier:",bg= Dark_Olive_Slate, fg= Yellow_Sulphur)
+    Amplifier_volume.config(font=(Font_UI, 10, BOLD))
+    Amplifier_volume.place(relx = 0.5, rely = 0.55, anchor = CENTER)
+
+    Amplifier_volume_Entry = Entry(newWindow_Volume, state="normal",font=(Font_UI, 13, BOLD),justify='center',bg = Blue_Salvia, highlightbackground=Yellow_Sulphur, fg = Dark_Olive_Slate)
+    Amplifier_volume_Entry.insert(END, "0")
+    Amplifier_volume_Entry.place(relx = 0.20, rely = 0.75, anchor = CENTER, width=60, height=35)
+
+    Amplifier_volume_Button = Button(newWindow_Volume, text="Apply AMP",font=(Font_UI, 9, BOLD),bg= Blue_Salvia, fg= Dark_Olive_Slate)
+    Amplifier_volume_Button.config(command= lambda: Volume_Amplifier_all_tracks(Amplifier_volume_Entry))
+    Amplifier_volume_Button.place(relx = 0.70, rely = 0.75, anchor = CENTER, height="35", width="90")
+
+
+
+    Warning = Label(newWindow_Volume, text="DO NOT USE EQUALIZER IF NOT SURE OF WHAT IT DOES",bg= Dark_Olive_Slate, fg= "#606474")
+    Warning.config(font=(Font_UI, 6, BOLD))
+    Warning.place(relx = 0.5, rely = 0.95, anchor = CENTER)              
+
 
 def openNewWindow(id,Title,Instrument):
 
@@ -2027,6 +2144,10 @@ Input_Box_message5.place(relx = 0.05, rely = 0.23, anchor = NW)
 #Open file
 OpenFile_Button = Button(root, text="Load",bg= Blue_Salvia, fg= Dark_Olive_Slate, command=RawConvertor_fromfile)
 OpenFile_Button.place(relx = 0.74, rely = 0.18, anchor = CENTER, width="180")
+
+VolumeEditor_Button = Button(root, text="Volume\nEditor",bg= Blue_Salvia, fg= Dark_Olive_Slate, command=openNew_volume_Window)
+VolumeEditor_Button.config(font=(Font_UI, 7, BOLD))
+VolumeEditor_Button.place(relx = 0.68, rely = 0.92, anchor = CENTER, width="60", height = "40")
 
 #info_button = Button(root, text="Instrument list.",bg= Blue_Salvia, fg= Dark_Olive_Slate, command= lambda: TK_Message(instrument_List,"Instrument IDs"))
 #info_button.place(relx = 0.74, rely = 0.9, anchor = CENTER, width="150")
