@@ -29,11 +29,11 @@ root.iconbitmap(default='Resources/546967657253.Babro') #importing images
 Other_entry = Entry(root, state='readonly',width="30", bg=Light_Brown_Drab, fg=Light_Brown_Drab, highlightbackground=Light_Brown_Drab )
 Other_entry.place(relx = 0.27, rely = 0.18, anchor = CENTER)
 
-ID_instrument_items=['Acoustic Guitar', 'Action note', 'Analog Kick', 'Analog Kick 2', 'Bass', 'Bassoon', 'Bongo percussion', 'Bongos solo', 'Brass', 'Choir', 'Choir 2', 'Clarinet', 'Classic Guitar', 'Classic Guitar 2', 'Closed Cymbal', 'Closed Cymbal 2', 'Cowbell', 'Cymbal', 'DJ Scratch', 'Downlifter', 'Dramatic Brass', 'Fantasia', 'Fantasia 2', 'Fantasia 3', 'GBA Lead', 'Gothic Organ', 'Gothic Organ 2', 'Guitar', 'Hi-Hat(Closed)', 'Jingle bells', 'Jotaro Guitar', 'Mizmar (Arabic flute)', 'Muffled Analog Kick', 'Muffled rock guitar', 'Organ', 'Percussion', 'Petshop Guitar', 'Petshop Guitar 2', 'Piano', 'Reverse Cymbal', 'Ride', 'Rock Guitar', 'Shaker', 'Shovel', 'Snare', 'Snare 2', 'Snowsteps', 'Spring', 'Synth Bass', 'Timpani', 'Timpani 2', 'Triangle', 'Triangle 2', 'Trombone', 'Trombone 2 (deeper)', 'Trumpet', 'Tuba', 'Vibe', 'Vibraslap', 'Viola Strings', 'Violin Strings', 'Zip Zap']
+ID_instrument_items=['Acoustic Guitar', 'Action note', 'Bass', 'Bassoon', 'Bongo percussion', 'Bongos solo', 'Brass', 'Choir', 'Choir 2', 'Clarinet', 'Classic Guitar', 'Classic Guitar 2', 'Closed Cymbal', 'Closed Cymbal 2', 'Cowbell', 'Cymbal', 'DJ Scratch', 'Downlifter', 'Dramatic Brass', 'Drumkit', 'Drumkit (2013)', 'Fantasia', 'Fantasia 2', 'Fantasia 3', 'GBA Square synth', 'Gothic Organ', 'Gothic Organ 2', 'Guitar','Harpsichord', 'Hi-Hat(Closed)', 'Jingle bells', 'Jotaro Guitar', 'Mizmar (Arabic flute)', 'Muffled Analog Kick', 'Muffled rock guitar', 'Organ', 'Percussion', 'Petshop Guitar', 'Petshop Guitar 2', 'Piano', 'Reverse Cymbal', 'Ride', 'Rock Guitar', 'Shaker', 'Shovel', 'Snare', 'Snare 2', 'Snowsteps', 'Synth Bass', 'Timpani', 'Timpani 2', 'Triangle', 'Triangle 2', 'Trombone', 'Trombone 2 (deeper)', 'Trumpet', 'Tuba', 'Vibe', 'Vibraslap', 'Viola Strings', 'Violin Strings', 'Zip Zap']
 
 ID_instrument_List= { #INSTRUMENT MAPPING
-    "Analog Kick":0,
-    'Analog Kick 2':1,
+    "Drumkit":0,
+    "Drumkit (2013)":1,
     "Muffled Analog Kick":2,
     "Snare":3,
     "Snare 2":4,
@@ -61,14 +61,14 @@ ID_instrument_List= { #INSTRUMENT MAPPING
     "Fantasia 2":26,
     "Fantasia 3":27,
     "Gothic Organ 2":28,
-    "Spring":29,
+    "Harpsichord":29,
     "Vibe":30,
     "Brass":31,
     "Trumpet":32,
     "Trombone":33,
     "Trombone 2 (deeper)":34,
     "Tuba":35,
-    "GBA Lead":36,
+    "GBA Square synth":36,
     "Violin Strings":37,
     "Viola Strings":38,
     "Shovel":39,
@@ -97,6 +97,8 @@ ID_instrument_List= { #INSTRUMENT MAPPING
 }
 
 Data = [] #Data that's then exported at the end.
+
+Drumkit_Default = [['0D'],['03'],['2b'],['2b'],['07'],['02'],['07'],['0a'],['00'],['01'],['07'],['04'],['03'],['03'],['06'],['05'],['06'],['05'],['0e'],['08'],['0e'],['0e'],['08'],['0e'],['0f'],['09'],['09'],['08'],['3b'],['0a'],['08'],['3d'],['0f'],['30'],['30'],['34'],['34'],['34'],['28'],['28'],['1A'],['1A'],['2a'],['0b'],['0c'],['0c'],['3d'],['3d'],['00'],['00'],['00'],['2E'],['2E'],['3a'],['39'],['2a'],['29'],['29'],['00'],['06'],['06']]
 
 global Delta_data_list
 Delta_data_list = []
@@ -529,6 +531,7 @@ def ConvertProcess (mid): #splitting the track chunk into the individual tracks 
             Data.append(f"C7{Command_C7}01") #C7 COMMAND
             Data.append(f"C83700D0") #C8 COMMAND (unkn)
 
+
             volume_increase = 60 + Track_Volume_increase
             Pitch_Change = Pitch_shift #TO-DO
             Hold_increase = 0 #TO-DO
@@ -539,8 +542,19 @@ def ConvertProcess (mid): #splitting the track chunk into the individual tracks 
 
             Delta_Total = 0
             Delta_Total_check = 0
-            Percussion_Boolean = 0
+            def constants():
+                constants.Percussion_Boolean = 0
             Volume_warning = False
+            constants()
+
+            def Drumkit_maker(Instrument_list):
+                for i in range (27,87):
+                    if int(msg.note+Pitch_Change) == i :
+                        if constants.Percussion_Boolean != i:
+                            Data.append(f"C4{Instrument_list[i-27][0]}") #Hat open
+                            print(Instrument_list[i-27])
+                            constants.Percussion_Boolean = 0 #Hat open            
+
 
             for msg in track:
                 if msg.type == "note_on":
@@ -573,32 +587,7 @@ def ConvertProcess (mid): #splitting the track chunk into the individual tracks 
                         Data.append(Val_to_var_length (Previous_hold+Delta_time+Hold_increase,1)) #Release / Delta
                         Delta_Total_check = Delta_Total_check + Previous_hold+Delta_time+Hold_increase
                         if Command_C4 == "00": #PERCUSSION INSTRUMENT SPLIT
-                            print (int(msg.note+Pitch_Change))
-                            if int(msg.note+Pitch_Change) == 46 :
-                                print("Hat open")
-                                if Percussion_Boolean != 4:
-                                    Data.append("C407") #Hat open
-                                    Percussion_Boolean = 4 #Hat open
-                            if 45 < int(msg.note+Pitch_Change) != 46 :
-                                print("Percussion")
-                                if Percussion_Boolean != 3:
-                                    Data.append("C406") #Snare 2
-                                    Percussion_Boolean = 3 #Snare 2
-                            if 45 > int(msg.note+Pitch_Change) > 38 :
-                                print("Hat closed")
-                                if Percussion_Boolean != 2:
-                                    Data.append("C405") #Hat closed
-                                    Percussion_Boolean = 2 #Hat closed
-                            if 35 < int(msg.note+Pitch_Change) <= 38 :
-                                print("Snare")
-                                if Percussion_Boolean != 1:
-                                    Data.append("C403") #Snare
-                                    Percussion_Boolean = 1 #Snare
-                            if int(msg.note+Pitch_Change) <= 35 :
-                                print("Kick") 
-                                if Percussion_Boolean != 0:
-                                    Data.append("C400") #Kick
-                                    Percussion_Boolean = 0 #Kick               
+                            Drumkit_maker(Drumkit_Default)
                         Data.append((str(hex(msg.velocity+volume_increase)))[2:].zfill(2)) #Volume       
                         
                         Data.append((str(hex(msg.note+Pitch_Change)))[2:].zfill(2)) #Pitch
