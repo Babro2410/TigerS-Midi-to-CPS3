@@ -20,7 +20,7 @@ Font_UI = "Century Gothic"
 #Tkinter design stuff, don't bother.
 
 root = Tk()
-root.title("TigerS - Midi to CPS3 music convertor - V.Alpha.0.50 22/02/2022") #Title of the window
+root.title("TigerS - Midi to CPS3 music convertor - V.Alpha.0.53 29/04/2022") #Title of the window
 root.geometry("520x450") #Window size
 root.config(background= Dark_Olive_Slate) #window config
 root.resizable(0, 0) #can't resize window
@@ -29,9 +29,10 @@ root.iconbitmap(default='Resources/546967657253.Babro') #importing images
 Other_entry = Entry(root, state='readonly',width="30", bg=Light_Brown_Drab, fg=Light_Brown_Drab, highlightbackground=Light_Brown_Drab )
 Other_entry.place(relx = 0.27, rely = 0.18, anchor = CENTER)
 
-ID_instrument_items=['Acoustic Guitar', 'Action note', 'Bass', 'Bassoon', 'Bongo percussion', 'Bongos solo', 'Brass', 'Choir', 'Choir 2', 'Clarinet', 'Classic Guitar', 'Classic Guitar 2', 'Closed Cymbal', 'Closed Cymbal 2', 'Cowbell', 'Cymbal', 'DJ Scratch', 'Downlifter', 'Dramatic Brass', 'Drumkit', 'Drumkit (2013)', 'Fantasia', 'Fantasia 2', 'Fantasia 3', 'GBA Square synth', 'Gothic Organ', 'Gothic Organ 2', 'Guitar','Harpsichord', 'Hi-Hat(Closed)', 'Jingle bells', 'Jotaro Guitar', 'Mizmar (Arabic flute)', 'Muffled Analog Kick', 'Muffled rock guitar', 'Organ', 'Percussion', 'Petshop Guitar', 'Petshop Guitar 2', 'Piano', 'Reverse Cymbal', 'Ride', 'Rock Guitar', 'Shaker', 'Shovel', 'Snare', 'Snare 2', 'Snowsteps', 'Synth Bass', 'Timpani', 'Timpani 2', 'Triangle', 'Triangle 2', 'Trombone', 'Trombone 2 (deeper)', 'Trumpet', 'Tuba', 'Vibe', 'Vibraslap', 'Viola Strings', 'Violin Strings', 'Zip Zap']
+ID_instrument_items_HFTF=['Acoustic Guitar', 'Action note', 'Bass', 'Bassoon', 'Bongo percussion', 'Bongos solo', 'Brass', 'Choir', 'Choir 2', 'Clarinet', 'Classic Guitar', 'Classic Guitar 2', 'Closed Cymbal', 'Closed Cymbal 2', 'Cowbell', 'Cymbal', 'DJ Scratch', 'Downlifter', 'Dramatic Brass', 'Drumkit', 'Drumkit (2013)', 'Fantasia', 'Fantasia 2', 'Fantasia 3', 'GBA Square synth', 'Gothic Organ', 'Gothic Organ 2', 'Guitar','Harpsichord', 'Hi-Hat(Closed)', 'Jingle bells', 'Jotaro Guitar', 'Mizmar (Arabic flute)', 'Muffled Analog Kick', 'Muffled rock guitar', 'Organ', 'Percussion', 'Petshop Guitar', 'Petshop Guitar 2', 'Piano', 'Reverse Cymbal', 'Ride', 'Rock Guitar', 'Shaker', 'Shovel', 'Snare', 'Snare 2', 'Snowsteps', 'Synth Bass', 'Timpani', 'Timpani 2', 'Triangle', 'Triangle 2', 'Trombone', 'Trombone 2 (deeper)', 'Trumpet', 'Tuba', 'Vibe', 'Vibraslap', 'Viola Strings', 'Violin Strings', 'Zip Zap']
 
-ID_instrument_List= { #INSTRUMENT MAPPING
+ID_instrument_List_HFTF= { #INSTRUMENT MAPPING HFTF
+
     "Drumkit":0,
     "Drumkit (2013)":1,
     "Muffled Analog Kick":2,
@@ -96,9 +97,141 @@ ID_instrument_List= { #INSTRUMENT MAPPING
     "Vibraslap":61
 }
 
+ID_instrument_items_RED=['00', '01', '03', '04', '06', '07', '08', '09', '0A', '0B', '0D', '0E', '0F', '10', '11', '13', '14', '17', '18', '1A', '1F', '24', '26', '28', '29', '30', '30', '31', '31', '32', '32', 'Acoustic Bass', 'Bass', 'Brass', 'Brass', 'Bright Piano', 'Choir', 'Choir', 'Cymbal', 'Distortion Guitar', 'Flute', 'Gong', 'Orchestra Hit', 'Organ 1', 'Organ 2', 'Overdrive Guitar', 'Piano', 'Plucked Bass', 'Shakuhachi', 'Shakuhachi', 'Shamisen', 'Shamisen', 'Strings1', 'Strings2', 'Synth Pad1', 'Synth Pad2', 'Synth Pad2', 'Synth Piano', 'Triangle', 'Whistle']
+
+ID_instrument_List_RED={
+    "00":0,
+    "01":1,
+    "Cymbal":2,
+    "03":3,
+    "04":4,
+    "Gong":5,
+    "06":6,
+    "07":7,
+    "08":8,
+    "09":9,
+    "0A":10,
+    "0B":11,
+    "Triangle":12,
+    "0D":13,
+    "0E":14,
+    "0F":15,
+    "10":16,
+    "11":17,
+    "Orchestra Hit":18,
+    "13":19,
+    "14":20,
+    "Plucked Bass":21,
+    "Bass":22,
+    "17":23,
+    "18":24,
+    "Acoustic Bass":25,
+    "1A":26,
+    "Distortion Guitar":27,
+    "Overdrive Guitar":28,
+    "Strings1":29,
+    "Strings2":30,
+    "1F":31,
+    "Piano":32,
+    "Bright Piano":33,
+    "Synth Piano":34,
+    "Organ 1":35,
+    "24":36,
+    "Organ 2":37,
+    "26":38,
+    "Brass":39,
+    "28":40,
+    "29":41,
+    "Flute":42,
+    "Brass":43,
+    "Whistle":44,
+    "Synth Pad1":45,
+    "Synth Pad2":46,
+    "Choir":47,
+    "30":48,
+    "31":49,
+    "32":50,
+    "Shamisen":51,
+    "Shakuhachi":52,
+
+}
+
+ID_instrument_items_3S=['0B', '0C', '0E', '0F', '10', '11', '1E', '22', '23', '24', 'Beats', 'Breakbeat', 'Choir', 'Church Organ', 'Circuit', 'Cowbell', 'Crystal', 'Cymbal', 'Distortion Guidar', 'Drum', 'Funk Guitar', 'Funk Guitar Pluck', 'Funk Organ', 'Ibuki’s instrument', 'Intro  Breakbeat', 'Loud tone', 'Orchestra Hit', 'Orchestra Hit', 'Percussion', 'Percussion2', 'Percussion3', 'Piano', 'Plucked Bass', 'Sawtooth wave', 'Saxaphone 2', 'Saxophone 1', 'Shakuhachi', 'Softer tone', 'Square Wave', 'Steel Drum', 'Sticks', 'Strings', 'Synth Bass 1', 'Synth Bass 2', 'Synth Bass 3', 'Synth Bass 4', 'Synth Bass 5', 'Synth Bass 6', 'Synth Bass 7', 'Synth Bass 8', 'Synth Pad', 'Synth Slap Bass', 'Synth pluck1', 'Synth pluck2', 'Synth pluck3', 'Synth pluck4', 'Synth pluck5', 'Synth pluck6', 'Taiko Drum', 'Trangle Wave', 'Voice', 'We await your return, warrior', 'Xylopohone']
+
+ID_instrument_List_3S={
+    "Percussion":0,
+    "Percussion2":1,
+    "Cymbal":2,
+    "Percussion3":3,
+    "Drum":4,
+    "Breakbeat":5,
+    "Circuit":6,
+    "Intro  Breakbeat":7,
+    "Voice":8,
+    "We await your return, warrior":9,
+    "Taiko Drum":10,
+    "0B":11,
+    "0C":12,
+    "Steel Drum":13,
+    "0E":14,
+    "0F":15,
+    "10":16,
+    "11":17,
+    "Cowbell":18,
+    "Trangle Wave":19,
+    "Plucked Bass":20,
+    "Xylopohone":21,
+    "Distortion Guidar":22,
+    "Funk Guitar":23,
+    "Synth pluck1":24,
+    "Synth pluck2":25,
+    "Synth pluck3":26,
+    "Synth pluck4":27,
+    "Synth pluck5":28,
+    "Synth pluck6":29,
+    "1E":30,
+    "Funk Organ":31,
+    "Synth Slap Bass":32,
+    "Square Wave":33,
+    "22":34,
+    "23":35,
+    "24":36,
+    "Saxophone 1":37,
+    "Saxaphone 2":38,
+    "Piano":39,
+    "Ibuki’s instrument":40,
+    "Church Organ":41,
+    "Loud tone":42,
+    "Softer tone":43,
+    "Sawtooth wave":44,
+    "Choir":45,
+    "Strings":46,
+    "Shakuhachi":47,
+    "Crystal":48,
+    "Synth Bass 1":49,
+    "Synth Bass 2":50,
+    "Synth Bass 3":51,
+    "Synth Bass 4":52,
+    "Synth Bass 5":53,
+    "Synth Bass 6":54,
+    "Synth Bass 7":55,
+    "Synth Bass 8":56,
+    "Synth Pad":57,
+    "Sticks":58,
+    "Beats":59,
+    "Orchestra Hit":60,
+    "Funk Guitar Pluck":61,
+    "Orchestra Hit":62
+}    
+def Intrument_Groups ():
+    Intrument_Groups.ID_instrument_items= ID_instrument_items_HFTF
+    Intrument_Groups.ID_instrument_List = ID_instrument_List_HFTF
+
+Intrument_Groups ()
+
 Data = [] #Data that's then exported at the end.
 
-Drumkit_Default = [['0D'],['03'],['2b'],['2b'],['07'],['02'],['07'],['0a'],['00'],['01'],['07'],['04'],['03'],['03'],['06'],['05'],['06'],['05'],['0e'],['08'],['0e'],['0e'],['08'],['0e'],['0f'],['09'],['09'],['08'],['3b'],['0a'],['08'],['3d'],['0f'],['30'],['30'],['34'],['34'],['34'],['28'],['28'],['1A'],['1A'],['2a'],['0b'],['0c'],['0c'],['3d'],['3d'],['00'],['00'],['00'],['2E'],['2E'],['3a'],['39'],['2a'],['29'],['29'],['00'],['06'],['06']]
+Drumkit_Default = [['0D'],['03'],['2b'],['2b'],['07'],['02'],['07'],['0a'],['00'],['01'],['07'],['04'],['03'],['03'],['06'],['05'],['06'],['05'],['0e'],['08'],['0e'],['0e'],['08'],['0e'],['0f'],['09'],['09'],['08'],['3b'],['0a'],['08'],['3d'],['0f'],['30'],['30'],['34'],['34'],['34'],['28'],['28'],['1A'],['1A'],['2a'],['09'],['0c'],['0c'],['3d'],['3d'],['00'],['00'],['00'],['2E'],['2E'],['3a'],['39'],['2a'],['29'],['29'],['00'],['06'],['06']]
 
 global Delta_data_list
 Delta_data_list = []
@@ -361,7 +494,7 @@ def RawConvertor_fromfile(): #Opens file and analyzes first Midi header info.
                             elif i == 15:                
                                 Track_Information_lookup.Track_15_OG_Track_name = str(msg.name)
             convert_Button = Button(root, text="Convert",bg= Blue_Salvia, fg= Dark_Olive_Slate, command=lambda: ConvertProcess(Music_File))
-            convert_Button.place(relx = 0.84, rely = 0.93, anchor = CENTER, width="75")
+            convert_Button.place(relx = 0.87, rely = 0.93, anchor = CENTER, width="75")
 
             Other_entry.config(state="normal")
             Other_entry.delete(0, 'end')
@@ -912,7 +1045,6 @@ def Poly_2_Mono_Window(): #POLY TO MONO WINDOW
                             Track_new.append(Message("note_off", channel=Previous_channel, note=Previous_note, velocity=Previous_velocity, time=Previous_message_Delta))
                         in_between_commands = []
 
-                        msg.time = 0
 
                         Track_new.append(msg)
                     elif Note_off_pressed == True: #note off pressed
@@ -922,8 +1054,7 @@ def Poly_2_Mono_Window(): #POLY TO MONO WINDOW
                             Track_new.append(Message("note_off", channel=Previous_channel, note=Previous_note, velocity=Previous_velocity, time=Previous_message_Delta+Extra_delta_add))
                         Track_new.extend(in_between_commands)
                         in_between_commands = []
-
-                        msg.time = 0
+                        
 
                         Track_new.append(msg)        
                 else: #other commands
@@ -1001,14 +1132,14 @@ toolbar.config(background=Blue_Salvia)
 b1 = Button(toolbar, text="Load",borderwidth= 0,width=7,bg= Blue_Salvia, fg= Dark_Olive_Slate, command= RawConvertor_fromfile)
 b1.pack(side=LEFT, padx=0, pady=0) #Load file
 
-b2_message = "Q: Which file format is currently supported?\nA: At the moment only .mid files.\n\nQ: I've got an error saying something about 'monophonic midis', what does it mean?\nA: 'Monophonic MIDIs' are a type of midi that essentially don't play 2 notes at the same time in the same track, CPS3 tracks use that form of sequence data, therefore it is only possible to convert those types of midi for now.\n\nQ:I've converted the midi and got a bunch of hex data, what do I do?\nA:The program outputs in the form of CPS3 raw music data, meaning that such data still needs to be pasted into file 10 and encrypted back."
+b2_message = "Q: Which file format is currently supported?\nA: At the moment only .mid files.\n\nQ: I've got an error saying something about 'monophonic midis', what does it mean?\nA: 'Monophonic MIDIs' are a type of midi that essentially don't play 2 notes at the same time in the same track, CPS3 tracks use that form of sequence data.\n TL;DR: just use Poly 2 Mono.\n\nQ:I've converted the midi and got a bunch of hex data, what do I do?\nA:The program outputs in the form of CPS3 raw music data, meaning that such data still needs to be pasted into file 10 and encrypted back. I chose to make it this way so that people don't accidentally mess up their own roms while using the tool\n\nQ: Where do I need to save the 'Datafile.dat' file?\nA: inside your fba folder there should be a folder called 'research', simply drop it in there."
 b2 = Button(toolbar, text="Help",borderwidth= 0,width=7,bg= Blue_Salvia, fg= Dark_Olive_Slate, command=lambda: TK_Message(b2_message,"Common questions & answers."))
 b2.pack(side=LEFT, padx=0, pady=0) #Help, QnA
 
 b3 = Button(toolbar, text="Poly to Mono",borderwidth= 0,width=12,bg= Blue_Salvia, fg= Dark_Olive_Slate, command=lambda: Poly_2_Mono_Window())
 b3.pack(side=LEFT, padx=0, pady=0) #opens Poly to mono converter
 
-b4_message = "TigerS - Midi raw to CPS3 music convertor - Made by Babro.\n\nCredits to DrewDos for making the original CPS3 sfx documentation (not to mention the CPS3 spritemodding tool.) and helping me understand how the sound samples work.\n\nCredits to Insertusernamehere, creator of the CPS3 to MIDI tool who provided a lot of useful information, including how sequence data works, location of the various music data, and sharing the source code of his program.\nCredits to 'Mido' for existing.\n\nCredits to 'The Sonic Spot' for providing all the information about the MIDI file format (and the Wayback Machine for allowing me to see their old website).\n\nCredits to Visual Studio Code for crashing every 5 minutes."
+b4_message = "TigerS - Midi raw to CPS3 music convertor - Made by Babro.\n\nCredits to DrewDos for making the original CPS3 sfx documentation (not to mention the CPS3 spritemodding tool.) and helping me understand how the sound samples work.\n\nCredits to Insertusernamehere, creator of the CPS3 to MIDI tool who provided a lot of useful information, including how sequence data works, location of the various music data, and sharing the source code of his program.\nCredits to 'Mido' for existing.\n\nCredits to 'The Sonic Spot' for providing all the information about the MIDI file format (and the Wayback Machine for allowing me to see their old website).\n\nCredits to the Third Strike, 4rd Strike, HFTF, and Red Earth communities for helping me gather info.\n\nCredits to Visual Studio Code for crashing every 5 minutes."
 b4 = Button(toolbar, text="Credits",borderwidth= 0,width=7,bg= Blue_Salvia, fg= Dark_Olive_Slate, command=lambda: TK_Message(b4_message,"Credits"))
 b4.pack(side=LEFT, padx=0, pady=0) #Credits
 
@@ -1186,10 +1317,10 @@ def openNewWindow(id,Title,Instrument):
     Instrument_message.config(font=(Font_UI, 10, BOLD))
     Instrument_message.place(relx = 0.20, rely = 0.65, anchor = CENTER)
 
-    InstrumentSelectBox = ttk.Combobox(newWindow, values=ID_instrument_items, background= Blue_Salvia, foreground=Dark_Olive_Slate )
-    InstrumentSelectBox.insert (END,(list(ID_instrument_List)[int((Track_Instrument_List[id]).get())]))
+    InstrumentSelectBox = ttk.Combobox(newWindow, values=Intrument_Groups.ID_instrument_items, background= Blue_Salvia, foreground=Dark_Olive_Slate )
+    InstrumentSelectBox.insert (END,(list(Intrument_Groups.ID_instrument_List)[int((Track_Instrument_List[id]).get())]))
     print(int((Track_Instrument_List[id]).get()))
-    print((list(ID_instrument_List)[int((Track_Instrument_List[id]).get())]))
+    print((list(Intrument_Groups.ID_instrument_List)[int((Track_Instrument_List[id]).get())]))
     InstrumentSelectBox.place(relx = 0.20, rely = 0.75, anchor = CENTER, width=150)
 
     Track_C6_Volume_message = Label(newWindow, text=("Track {} Volume:".format(id)),bg=Dark_Olive_Slate, fg=Yellow_Sulphur)
@@ -1226,330 +1357,333 @@ def openNewWindow(id,Title,Instrument):
         Volume_Value=Track_Volume_SLIDER.get()
         Panning_Value=Track_Panning_SLIDER.get()
         Instrument_Value=InstrumentSelectBox.get()
-        Instrument_Value=(ID_instrument_List[Instrument_Value])
-        Track_C6_Volume_Value = Track_C6_Volume_SLIDER.get()
+        try:
+            Instrument_Value=(Intrument_Groups.ID_instrument_List[Instrument_Value])
+             
+            Track_C6_Volume_Value = Track_C6_Volume_SLIDER.get()
 
-        if id == 0:
-            Track_0_Volume.config(state="normal")
-            Track_0_Volume.delete(0, END)
-            Track_0_Volume.insert(END,Volume_Value)
-            Track_0_Volume.config(state="readonly")
+            if id == 0:
+                Track_0_Volume.config(state="normal")
+                Track_0_Volume.delete(0, END)
+                Track_0_Volume.insert(END,Volume_Value)
+                Track_0_Volume.config(state="readonly")
 
-            Track_0_Pan.config(state="normal")
-            Track_0_Pan.delete(0, END)
-            Track_0_Pan.insert(END, Panning_Value)
-            Track_0_Pan.config(state="readonly")
+                Track_0_Pan.config(state="normal")
+                Track_0_Pan.delete(0, END)
+                Track_0_Pan.insert(END, Panning_Value)
+                Track_0_Pan.config(state="readonly")
 
-            Track_0_Instrument.config(state="normal")
-            Track_0_Instrument.delete(0, END)
-            Track_0_Instrument.insert(END, Instrument_Value)
-            Track_0_Instrument.config(state="readonly")
+                Track_0_Instrument.config(state="normal")
+                Track_0_Instrument.delete(0, END)
+                Track_0_Instrument.insert(END, Instrument_Value)
+                Track_0_Instrument.config(state="readonly")
 
-            Track_0_C6_Value.config(state="normal")
-            Track_0_C6_Value.delete(0, END)
-            Track_0_C6_Value.insert(END, Track_C6_Volume_Value)
-            Track_0_C6_Value.config(state="readonly")
-        elif id == 1:
-            Track_1_Volume.config(state="normal")
-            Track_1_Volume.delete(0, END)
-            Track_1_Volume.insert(END,Volume_Value)
-            Track_1_Volume.config(state="readonly")
+                Track_0_C6_Value.config(state="normal")
+                Track_0_C6_Value.delete(0, END)
+                Track_0_C6_Value.insert(END, Track_C6_Volume_Value)
+                Track_0_C6_Value.config(state="readonly")
+            elif id == 1:
+                Track_1_Volume.config(state="normal")
+                Track_1_Volume.delete(0, END)
+                Track_1_Volume.insert(END,Volume_Value)
+                Track_1_Volume.config(state="readonly")
 
-            Track_1_Pan.config(state="normal")
-            Track_1_Pan.delete(0, END)
-            Track_1_Pan.insert(END, Panning_Value)
-            Track_1_Pan.config(state="readonly")
+                Track_1_Pan.config(state="normal")
+                Track_1_Pan.delete(0, END)
+                Track_1_Pan.insert(END, Panning_Value)
+                Track_1_Pan.config(state="readonly")
 
-            Track_1_Instrument.config(state="normal")
-            Track_1_Instrument.delete(0, END)
-            Track_1_Instrument.insert(END, Instrument_Value)
-            Track_1_Instrument.config(state="readonly")
+                Track_1_Instrument.config(state="normal")
+                Track_1_Instrument.delete(0, END)
+                Track_1_Instrument.insert(END, Instrument_Value)
+                Track_1_Instrument.config(state="readonly")
 
-            Track_1_C6_Value.config(state="normal")
-            Track_1_C6_Value.delete(0, END)
-            Track_1_C6_Value.insert(END, Track_C6_Volume_Value)
-            Track_1_C6_Value.config(state="readonly")
-        elif id == 2:
-            Track_2_Volume.config(state="normal")
-            Track_2_Volume.delete(0, END)
-            Track_2_Volume.insert(END,Volume_Value)
-            Track_2_Volume.config(state="readonly")
+                Track_1_C6_Value.config(state="normal")
+                Track_1_C6_Value.delete(0, END)
+                Track_1_C6_Value.insert(END, Track_C6_Volume_Value)
+                Track_1_C6_Value.config(state="readonly")
+            elif id == 2:
+                Track_2_Volume.config(state="normal")
+                Track_2_Volume.delete(0, END)
+                Track_2_Volume.insert(END,Volume_Value)
+                Track_2_Volume.config(state="readonly")
 
-            Track_2_Pan.config(state="normal")
-            Track_2_Pan.delete(0, END)
-            Track_2_Pan.insert(END, Panning_Value)
-            Track_2_Pan.config(state="readonly")
+                Track_2_Pan.config(state="normal")
+                Track_2_Pan.delete(0, END)
+                Track_2_Pan.insert(END, Panning_Value)
+                Track_2_Pan.config(state="readonly")
 
-            Track_2_Instrument.config(state="normal")
-            Track_2_Instrument.delete(0, END)
-            Track_2_Instrument.insert(END, Instrument_Value)
-            Track_2_Instrument.config(state="readonly")
+                Track_2_Instrument.config(state="normal")
+                Track_2_Instrument.delete(0, END)
+                Track_2_Instrument.insert(END, Instrument_Value)
+                Track_2_Instrument.config(state="readonly")
 
-            Track_2_C6_Value.config(state="normal")
-            Track_2_C6_Value.delete(0, END)
-            Track_2_C6_Value.insert(END, Track_C6_Volume_Value)
-            Track_2_C6_Value.config(state="readonly")
-        elif id == 3:
-            Track_3_Volume.config(state="normal")
-            Track_3_Volume.delete(0, END)
-            Track_3_Volume.insert(END,Volume_Value)
-            Track_3_Volume.config(state="readonly")
+                Track_2_C6_Value.config(state="normal")
+                Track_2_C6_Value.delete(0, END)
+                Track_2_C6_Value.insert(END, Track_C6_Volume_Value)
+                Track_2_C6_Value.config(state="readonly")
+            elif id == 3:
+                Track_3_Volume.config(state="normal")
+                Track_3_Volume.delete(0, END)
+                Track_3_Volume.insert(END,Volume_Value)
+                Track_3_Volume.config(state="readonly")
 
-            Track_3_Pan.config(state="normal")
-            Track_3_Pan.delete(0, END)
-            Track_3_Pan.insert(END, Panning_Value)
-            Track_3_Pan.config(state="readonly")
+                Track_3_Pan.config(state="normal")
+                Track_3_Pan.delete(0, END)
+                Track_3_Pan.insert(END, Panning_Value)
+                Track_3_Pan.config(state="readonly")
 
-            Track_3_Instrument.config(state="normal")
-            Track_3_Instrument.delete(0, END)
-            Track_3_Instrument.insert(END, Instrument_Value)
-            Track_3_Instrument.config(state="readonly")
+                Track_3_Instrument.config(state="normal")
+                Track_3_Instrument.delete(0, END)
+                Track_3_Instrument.insert(END, Instrument_Value)
+                Track_3_Instrument.config(state="readonly")
 
-            Track_3_C6_Value.config(state="normal")
-            Track_3_C6_Value.delete(0, END)
-            Track_3_C6_Value.insert(END, Track_C6_Volume_Value)
-            Track_3_C6_Value.config(state="readonly")
-        elif id == 4:
-            Track_4_Volume.config(state="normal")
-            Track_4_Volume.delete(0, END)
-            Track_4_Volume.insert(END,Volume_Value)
-            Track_4_Volume.config(state="readonly")
+                Track_3_C6_Value.config(state="normal")
+                Track_3_C6_Value.delete(0, END)
+                Track_3_C6_Value.insert(END, Track_C6_Volume_Value)
+                Track_3_C6_Value.config(state="readonly")
+            elif id == 4:
+                Track_4_Volume.config(state="normal")
+                Track_4_Volume.delete(0, END)
+                Track_4_Volume.insert(END,Volume_Value)
+                Track_4_Volume.config(state="readonly")
 
-            Track_4_Pan.config(state="normal")
-            Track_4_Pan.delete(0, END)
-            Track_4_Pan.insert(END, Panning_Value)
-            Track_4_Pan.config(state="readonly")
+                Track_4_Pan.config(state="normal")
+                Track_4_Pan.delete(0, END)
+                Track_4_Pan.insert(END, Panning_Value)
+                Track_4_Pan.config(state="readonly")
 
-            Track_4_Instrument.config(state="normal")
-            Track_4_Instrument.delete(0, END)
-            Track_4_Instrument.insert(END, Instrument_Value)
-            Track_4_Instrument.config(state="readonly")
+                Track_4_Instrument.config(state="normal")
+                Track_4_Instrument.delete(0, END)
+                Track_4_Instrument.insert(END, Instrument_Value)
+                Track_4_Instrument.config(state="readonly")
 
-            Track_4_C6_Value.config(state="normal")
-            Track_4_C6_Value.delete(0, END)
-            Track_4_C6_Value.insert(END, Track_C6_Volume_Value)
-            Track_4_C6_Value.config(state="readonly")
-        elif id == 5:
-            Track_5_Volume.config(state="normal")
-            Track_5_Volume.delete(0, END)
-            Track_5_Volume.insert(END,Volume_Value)
-            Track_5_Volume.config(state="readonly")
+                Track_4_C6_Value.config(state="normal")
+                Track_4_C6_Value.delete(0, END)
+                Track_4_C6_Value.insert(END, Track_C6_Volume_Value)
+                Track_4_C6_Value.config(state="readonly")
+            elif id == 5:
+                Track_5_Volume.config(state="normal")
+                Track_5_Volume.delete(0, END)
+                Track_5_Volume.insert(END,Volume_Value)
+                Track_5_Volume.config(state="readonly")
 
-            Track_5_Pan.config(state="normal")
-            Track_5_Pan.delete(0, END)
-            Track_5_Pan.insert(END, Panning_Value)
-            Track_5_Pan.config(state="readonly")
+                Track_5_Pan.config(state="normal")
+                Track_5_Pan.delete(0, END)
+                Track_5_Pan.insert(END, Panning_Value)
+                Track_5_Pan.config(state="readonly")
 
-            Track_5_Instrument.config(state="normal")
-            Track_5_Instrument.delete(0, END)
-            Track_5_Instrument.insert(END, Instrument_Value)
-            Track_5_Instrument.config(state="readonly")
+                Track_5_Instrument.config(state="normal")
+                Track_5_Instrument.delete(0, END)
+                Track_5_Instrument.insert(END, Instrument_Value)
+                Track_5_Instrument.config(state="readonly")
 
-            Track_5_C6_Value.config(state="normal")
-            Track_5_C6_Value.delete(0, END)
-            Track_5_C6_Value.insert(END, Track_C6_Volume_Value)
-            Track_5_C6_Value.config(state="readonly")
-        elif id == 6:
-            Track_6_Volume.config(state="normal")
-            Track_6_Volume.delete(0, END)
-            Track_6_Volume.insert(END,Volume_Value)
-            Track_6_Volume.config(state="readonly")
+                Track_5_C6_Value.config(state="normal")
+                Track_5_C6_Value.delete(0, END)
+                Track_5_C6_Value.insert(END, Track_C6_Volume_Value)
+                Track_5_C6_Value.config(state="readonly")
+            elif id == 6:
+                Track_6_Volume.config(state="normal")
+                Track_6_Volume.delete(0, END)
+                Track_6_Volume.insert(END,Volume_Value)
+                Track_6_Volume.config(state="readonly")
 
-            Track_6_Pan.config(state="normal")
-            Track_6_Pan.delete(0, END)
-            Track_6_Pan.insert(END, Panning_Value)
-            Track_6_Pan.config(state="readonly")
+                Track_6_Pan.config(state="normal")
+                Track_6_Pan.delete(0, END)
+                Track_6_Pan.insert(END, Panning_Value)
+                Track_6_Pan.config(state="readonly")
 
-            Track_6_Instrument.config(state="normal")
-            Track_6_Instrument.delete(0, END)
-            Track_6_Instrument.insert(END, Instrument_Value)
-            Track_6_Instrument.config(state="readonly")
+                Track_6_Instrument.config(state="normal")
+                Track_6_Instrument.delete(0, END)
+                Track_6_Instrument.insert(END, Instrument_Value)
+                Track_6_Instrument.config(state="readonly")
 
-            Track_6_C6_Value.config(state="normal")
-            Track_6_C6_Value.delete(0, END)
-            Track_6_C6_Value.insert(END, Track_C6_Volume_Value)
-            Track_6_C6_Value.config(state="readonly")
-        elif id == 7:
-            Track_7_Volume.config(state="normal")
-            Track_7_Volume.delete(0, END)
-            Track_7_Volume.insert(END,Volume_Value)
-            Track_7_Volume.config(state="readonly")
+                Track_6_C6_Value.config(state="normal")
+                Track_6_C6_Value.delete(0, END)
+                Track_6_C6_Value.insert(END, Track_C6_Volume_Value)
+                Track_6_C6_Value.config(state="readonly")
+            elif id == 7:
+                Track_7_Volume.config(state="normal")
+                Track_7_Volume.delete(0, END)
+                Track_7_Volume.insert(END,Volume_Value)
+                Track_7_Volume.config(state="readonly")
 
-            Track_7_Pan.config(state="normal")
-            Track_7_Pan.delete(0, END)
-            Track_7_Pan.insert(END, Panning_Value)
-            Track_7_Pan.config(state="readonly")
+                Track_7_Pan.config(state="normal")
+                Track_7_Pan.delete(0, END)
+                Track_7_Pan.insert(END, Panning_Value)
+                Track_7_Pan.config(state="readonly")
 
-            Track_7_Instrument.config(state="normal")
-            Track_7_Instrument.delete(0, END)
-            Track_7_Instrument.insert(END, Instrument_Value)
-            Track_7_Instrument.config(state="readonly")
+                Track_7_Instrument.config(state="normal")
+                Track_7_Instrument.delete(0, END)
+                Track_7_Instrument.insert(END, Instrument_Value)
+                Track_7_Instrument.config(state="readonly")
 
-            Track_7_C6_Value.config(state="normal")
-            Track_7_C6_Value.delete(0, END)
-            Track_7_C6_Value.insert(END, Track_C6_Volume_Value)
-            Track_7_C6_Value.config(state="readonly")
-        elif id == 8:
-            Track_8_Volume.config(state="normal")
-            Track_8_Volume.delete(0, END)
-            Track_8_Volume.insert(END,Volume_Value)
-            Track_8_Volume.config(state="readonly")
+                Track_7_C6_Value.config(state="normal")
+                Track_7_C6_Value.delete(0, END)
+                Track_7_C6_Value.insert(END, Track_C6_Volume_Value)
+                Track_7_C6_Value.config(state="readonly")
+            elif id == 8:
+                Track_8_Volume.config(state="normal")
+                Track_8_Volume.delete(0, END)
+                Track_8_Volume.insert(END,Volume_Value)
+                Track_8_Volume.config(state="readonly")
 
-            Track_8_Pan.config(state="normal")
-            Track_8_Pan.delete(0, END)
-            Track_8_Pan.insert(END, Panning_Value)
-            Track_8_Pan.config(state="readonly")
+                Track_8_Pan.config(state="normal")
+                Track_8_Pan.delete(0, END)
+                Track_8_Pan.insert(END, Panning_Value)
+                Track_8_Pan.config(state="readonly")
 
-            Track_8_Instrument.config(state="normal")
-            Track_8_Instrument.delete(0, END)
-            Track_8_Instrument.insert(END, Instrument_Value)
-            Track_8_Instrument.config(state="readonly")
+                Track_8_Instrument.config(state="normal")
+                Track_8_Instrument.delete(0, END)
+                Track_8_Instrument.insert(END, Instrument_Value)
+                Track_8_Instrument.config(state="readonly")
 
-            Track_8_C6_Value.config(state="normal")
-            Track_8_C6_Value.delete(0, END)
-            Track_8_C6_Value.insert(END, Track_C6_Volume_Value)
-            Track_8_C6_Value.config(state="readonly")
-        elif id == 9:
-            Track_9_Volume.config(state="normal")
-            Track_9_Volume.delete(0, END)
-            Track_9_Volume.insert(END,Volume_Value)
-            Track_9_Volume.config(state="readonly")
+                Track_8_C6_Value.config(state="normal")
+                Track_8_C6_Value.delete(0, END)
+                Track_8_C6_Value.insert(END, Track_C6_Volume_Value)
+                Track_8_C6_Value.config(state="readonly")
+            elif id == 9:
+                Track_9_Volume.config(state="normal")
+                Track_9_Volume.delete(0, END)
+                Track_9_Volume.insert(END,Volume_Value)
+                Track_9_Volume.config(state="readonly")
 
-            Track_9_Pan.config(state="normal")
-            Track_9_Pan.delete(0, END)
-            Track_9_Pan.insert(END, Panning_Value)
-            Track_9_Pan.config(state="readonly")
+                Track_9_Pan.config(state="normal")
+                Track_9_Pan.delete(0, END)
+                Track_9_Pan.insert(END, Panning_Value)
+                Track_9_Pan.config(state="readonly")
 
-            Track_9_Instrument.config(state="normal")
-            Track_9_Instrument.delete(0, END)
-            Track_9_Instrument.insert(END, Instrument_Value)
-            Track_9_Instrument.config(state="readonly")
+                Track_9_Instrument.config(state="normal")
+                Track_9_Instrument.delete(0, END)
+                Track_9_Instrument.insert(END, Instrument_Value)
+                Track_9_Instrument.config(state="readonly")
 
-            Track_9_C6_Value.config(state="normal")
-            Track_9_C6_Value.delete(0, END)
-            Track_9_C6_Value.insert(END, Track_C6_Volume_Value)
-            Track_9_C6_Value.config(state="readonly")
-        elif id == 10:
-            Track_10_Volume.config(state="normal")
-            Track_10_Volume.delete(0, END)
-            Track_10_Volume.insert(END,Volume_Value)
-            Track_10_Volume.config(state="readonly")
+                Track_9_C6_Value.config(state="normal")
+                Track_9_C6_Value.delete(0, END)
+                Track_9_C6_Value.insert(END, Track_C6_Volume_Value)
+                Track_9_C6_Value.config(state="readonly")
+            elif id == 10:
+                Track_10_Volume.config(state="normal")
+                Track_10_Volume.delete(0, END)
+                Track_10_Volume.insert(END,Volume_Value)
+                Track_10_Volume.config(state="readonly")
 
-            Track_10_Pan.config(state="normal")
-            Track_10_Pan.delete(0, END)
-            Track_10_Pan.insert(END, Panning_Value)
-            Track_10_Pan.config(state="readonly")
+                Track_10_Pan.config(state="normal")
+                Track_10_Pan.delete(0, END)
+                Track_10_Pan.insert(END, Panning_Value)
+                Track_10_Pan.config(state="readonly")
 
-            Track_10_Instrument.config(state="normal")
-            Track_10_Instrument.delete(0, END)
-            Track_10_Instrument.insert(END, Instrument_Value)
-            Track_10_Instrument.config(state="readonly")
+                Track_10_Instrument.config(state="normal")
+                Track_10_Instrument.delete(0, END)
+                Track_10_Instrument.insert(END, Instrument_Value)
+                Track_10_Instrument.config(state="readonly")
 
-            Track_10_C6_Value.config(state="normal")
-            Track_10_C6_Value.delete(0, END)
-            Track_10_C6_Value.insert(END, Track_C6_Volume_Value)
-            Track_10_C6_Value.config(state="readonly")
-        elif id == 11:
-            Track_11_Volume.config(state="normal")
-            Track_11_Volume.delete(0, END)
-            Track_11_Volume.insert(END,Volume_Value)
-            Track_11_Volume.config(state="readonly")
+                Track_10_C6_Value.config(state="normal")
+                Track_10_C6_Value.delete(0, END)
+                Track_10_C6_Value.insert(END, Track_C6_Volume_Value)
+                Track_10_C6_Value.config(state="readonly")
+            elif id == 11:
+                Track_11_Volume.config(state="normal")
+                Track_11_Volume.delete(0, END)
+                Track_11_Volume.insert(END,Volume_Value)
+                Track_11_Volume.config(state="readonly")
 
-            Track_11_Pan.config(state="normal")
-            Track_11_Pan.delete(0, END)
-            Track_11_Pan.insert(END, Panning_Value)
-            Track_11_Pan.config(state="readonly")
+                Track_11_Pan.config(state="normal")
+                Track_11_Pan.delete(0, END)
+                Track_11_Pan.insert(END, Panning_Value)
+                Track_11_Pan.config(state="readonly")
 
-            Track_11_Instrument.config(state="normal")
-            Track_11_Instrument.delete(0, END)
-            Track_11_Instrument.insert(END, Instrument_Value)
-            Track_11_Instrument.config(state="readonly")
+                Track_11_Instrument.config(state="normal")
+                Track_11_Instrument.delete(0, END)
+                Track_11_Instrument.insert(END, Instrument_Value)
+                Track_11_Instrument.config(state="readonly")
 
-            Track_11_C6_Value.config(state="normal")
-            Track_11_C6_Value.delete(0, END)
-            Track_11_C6_Value.insert(END, Track_C6_Volume_Value)
-            Track_11_C6_Value.config(state="readonly")
-        elif id == 12:
-            Track_12_Volume.config(state="normal")
-            Track_12_Volume.delete(0, END)
-            Track_12_Volume.insert(END,Volume_Value)
-            Track_12_Volume.config(state="readonly")
+                Track_11_C6_Value.config(state="normal")
+                Track_11_C6_Value.delete(0, END)
+                Track_11_C6_Value.insert(END, Track_C6_Volume_Value)
+                Track_11_C6_Value.config(state="readonly")
+            elif id == 12:
+                Track_12_Volume.config(state="normal")
+                Track_12_Volume.delete(0, END)
+                Track_12_Volume.insert(END,Volume_Value)
+                Track_12_Volume.config(state="readonly")
 
-            Track_12_Pan.config(state="normal")
-            Track_12_Pan.delete(0, END)
-            Track_12_Pan.insert(END, Panning_Value)
-            Track_12_Pan.config(state="readonly")
+                Track_12_Pan.config(state="normal")
+                Track_12_Pan.delete(0, END)
+                Track_12_Pan.insert(END, Panning_Value)
+                Track_12_Pan.config(state="readonly")
 
-            Track_12_Instrument.config(state="normal")
-            Track_12_Instrument.delete(0, END)
-            Track_12_Instrument.insert(END, Instrument_Value)
-            Track_12_Instrument.config(state="readonly")
+                Track_12_Instrument.config(state="normal")
+                Track_12_Instrument.delete(0, END)
+                Track_12_Instrument.insert(END, Instrument_Value)
+                Track_12_Instrument.config(state="readonly")
 
-            Track_12_C6_Value.config(state="normal")
-            Track_12_C6_Value.delete(0, END)
-            Track_12_C6_Value.insert(END, Track_C6_Volume_Value)
-            Track_12_C6_Value.config(state="readonly")
-        elif id == 13:
-            Track_13_Volume.config(state="normal")
-            Track_13_Volume.delete(0, END)
-            Track_13_Volume.insert(END,Volume_Value)
-            Track_13_Volume.config(state="readonly")
+                Track_12_C6_Value.config(state="normal")
+                Track_12_C6_Value.delete(0, END)
+                Track_12_C6_Value.insert(END, Track_C6_Volume_Value)
+                Track_12_C6_Value.config(state="readonly")
+            elif id == 13:
+                Track_13_Volume.config(state="normal")
+                Track_13_Volume.delete(0, END)
+                Track_13_Volume.insert(END,Volume_Value)
+                Track_13_Volume.config(state="readonly")
 
-            Track_13_Pan.config(state="normal")
-            Track_13_Pan.delete(0, END)
-            Track_13_Pan.insert(END, Panning_Value)
-            Track_13_Pan.config(state="readonly")
+                Track_13_Pan.config(state="normal")
+                Track_13_Pan.delete(0, END)
+                Track_13_Pan.insert(END, Panning_Value)
+                Track_13_Pan.config(state="readonly")
 
-            Track_13_Instrument.config(state="normal")
-            Track_13_Instrument.delete(0, END)
-            Track_13_Instrument.insert(END, Instrument_Value)
-            Track_13_Instrument.config(state="readonly")
+                Track_13_Instrument.config(state="normal")
+                Track_13_Instrument.delete(0, END)
+                Track_13_Instrument.insert(END, Instrument_Value)
+                Track_13_Instrument.config(state="readonly")
 
-            Track_13_C6_Value.config(state="normal")
-            Track_13_C6_Value.delete(0, END)
-            Track_13_C6_Value.insert(END, Track_C6_Volume_Value)
-            Track_13_C6_Value.config(state="readonly")
-        elif id == 14:
-            Track_14_Volume.config(state="normal")
-            Track_14_Volume.delete(0, END)
-            Track_14_Volume.insert(END,Volume_Value)
-            Track_14_Volume.config(state="readonly")
+                Track_13_C6_Value.config(state="normal")
+                Track_13_C6_Value.delete(0, END)
+                Track_13_C6_Value.insert(END, Track_C6_Volume_Value)
+                Track_13_C6_Value.config(state="readonly")
+            elif id == 14:
+                Track_14_Volume.config(state="normal")
+                Track_14_Volume.delete(0, END)
+                Track_14_Volume.insert(END,Volume_Value)
+                Track_14_Volume.config(state="readonly")
 
-            Track_14_Pan.config(state="normal")
-            Track_14_Pan.delete(0, END)
-            Track_14_Pan.insert(END, Panning_Value)
-            Track_14_Pan.config(state="readonly")
+                Track_14_Pan.config(state="normal")
+                Track_14_Pan.delete(0, END)
+                Track_14_Pan.insert(END, Panning_Value)
+                Track_14_Pan.config(state="readonly")
 
-            Track_14_Instrument.config(state="normal")
-            Track_14_Instrument.delete(0, END)
-            Track_14_Instrument.insert(END, Instrument_Value)
-            Track_14_Instrument.config(state="readonly")
+                Track_14_Instrument.config(state="normal")
+                Track_14_Instrument.delete(0, END)
+                Track_14_Instrument.insert(END, Instrument_Value)
+                Track_14_Instrument.config(state="readonly")
 
-            Track_14_C6_Value.config(state="normal")
-            Track_14_C6_Value.delete(0, END)
-            Track_14_C6_Value.insert(END, Track_C6_Volume_Value)
-            Track_14_C6_Value.config(state="readonly")
-        elif id == 15:
-            Track_15_Volume.config(state="normal")
-            Track_15_Volume.delete(0, END)
-            Track_15_Volume.insert(END,Volume_Value)
-            Track_15_Volume.config(state="readonly")
+                Track_14_C6_Value.config(state="normal")
+                Track_14_C6_Value.delete(0, END)
+                Track_14_C6_Value.insert(END, Track_C6_Volume_Value)
+                Track_14_C6_Value.config(state="readonly")
+            elif id == 15:
+                Track_15_Volume.config(state="normal")
+                Track_15_Volume.delete(0, END)
+                Track_15_Volume.insert(END,Volume_Value)
+                Track_15_Volume.config(state="readonly")
 
-            Track_15_Pan.config(state="normal")
-            Track_15_Pan.delete(0, END)
-            Track_15_Pan.insert(END, Panning_Value)
-            Track_15_Pan.config(state="readonly")
+                Track_15_Pan.config(state="normal")
+                Track_15_Pan.delete(0, END)
+                Track_15_Pan.insert(END, Panning_Value)
+                Track_15_Pan.config(state="readonly")
 
-            Track_15_Instrument.config(state="normal")
-            Track_15_Instrument.delete(0, END)
-            Track_15_Instrument.insert(END, Instrument_Value)
-            Track_15_Instrument.config(state="readonly")
+                Track_15_Instrument.config(state="normal")
+                Track_15_Instrument.delete(0, END)
+                Track_15_Instrument.insert(END, Instrument_Value)
+                Track_15_Instrument.config(state="readonly")
 
-            Track_15_C6_Value.config(state="normal")
-            Track_15_C6_Value.delete(0, END)
-            Track_15_C6_Value.insert(END, Track_C6_Volume_Value)
-            Track_15_C6_Value.config(state="readonly")
-
+                Track_15_C6_Value.config(state="normal")
+                Track_15_C6_Value.delete(0, END)
+                Track_15_C6_Value.insert(END, Track_C6_Volume_Value)
+                Track_15_C6_Value.config(state="readonly")
+        except KeyError: 
+            messagebox.showerror(title="Bank error! (ERROR ID:21)", message="Please, do not switch games while this window is open.")
     Track_apply_Button = Button(newWindow, text="Apply changes",bg= Blue_Salvia, fg= Dark_Olive_Slate)
     Track_apply_Button.config(command= lambda: Apply_changes(id))
     Track_apply_Button.place(relx = 0.2, rely = (0.90), anchor = CENTER, width=100,  height= 45)
@@ -2091,38 +2225,71 @@ BPM_multiplier_Entry = Entry(root, state="normal",font=(Font_UI, 13, BOLD),justi
 BPM_multiplier_Entry.insert(END, "16.9")
 BPM_multiplier_Entry.place(relx = 0.71, rely = 0.40, anchor = CENTER, width=40, height=35)
 
+Input_Box_message_GAME = Label(root, text="Game:",bg=Dark_Olive_Slate, fg=Yellow_Sulphur)
+Input_Box_message_GAME.config(font=(Font_UI, 8, BOLD))
+Input_Box_message_GAME.place(relx = 0.71, rely = 0.48, anchor = CENTER)
+
+#def Combobox_change_instrument_bank(self):
+#    Bank_ID = self.get()
+#    print(Bank_ID)
+
+def Combobox_change_instrument_bank(event):
+    Game_name = (Game_combo_box.get())
+
+    if str(Game_name) == "HFTF":
+        Intrument_Groups.ID_instrument_List = ID_instrument_List_HFTF
+        Intrument_Groups.ID_instrument_items = ID_instrument_items_HFTF
+    elif str(Game_name) == "Red Earth":
+        Intrument_Groups.ID_instrument_List = ID_instrument_List_RED
+        Intrument_Groups.ID_instrument_items = ID_instrument_items_RED 
+    elif str(Game_name) == "SFIII: New generation":
+        messagebox.showwarning(title="Missing Instrument Bank", message="Sorry but this game is not supported yet.")
+    elif str(Game_name) == "SFIII: Second Impact":
+        messagebox.showwarning(title="Missing Instrument Bank", message="Sorry but this game is not supported yet.")
+    elif str(Game_name) == "SFIII: Third Strike":
+        Intrument_Groups.ID_instrument_List = ID_instrument_List_3S
+        Intrument_Groups.ID_instrument_items = ID_instrument_items_3S                 
+
+
+Game_combo_box = ttk.Combobox(root, values=["HFTF","Red Earth","SFIII: New generation","SFIII: Second Impact","SFIII: Third Strike"])
+Game_combo_box.config(font=(Font_UI, 7, BOLD),width= "10",state="readonly")
+Game_combo_box.place(relx = 0.71, rely = 0.58, anchor = CENTER)
+Game_combo_box.current(0)
+Game_combo_box.bind("<<ComboboxSelected>>", Combobox_change_instrument_bank)
+
+
 #Slider
 
 Pitch_shift_slider = Scale(root, from_= +20, to=-20)
 Pitch_shift_slider.set(0)
 Pitch_shift_slider.config(bg = Blue_Salvia, fg = Dark_Olive_Slate, borderwidth= (2), tickinterval=8, length =100, activebackground= Blue_Salvia, highlightbackground=Yellow_Sulphur, troughcolor= Yellow_Sulphur)
-Pitch_shift_slider.place(relx = 0.84, rely = 0.682, anchor = CENTER)
+Pitch_shift_slider.place(relx = 0.87, rely = 0.682, anchor = CENTER)
 
 #Labels
 
 Input_Box_message1 = Label(root, text="Open MIDI raw data",bg=Dark_Olive_Slate, fg=Yellow_Sulphur)
 Input_Box_message1.config(font=(Font_UI, 10, BOLD))
-Input_Box_message1.place(relx = 0.72, rely = 0.11, anchor = CENTER)
+Input_Box_message1.place(relx = 0.75, rely = 0.11, anchor = CENTER)
 
 Input_Box_message2 = Label(root, text="Output",bg=Dark_Olive_Slate, fg=Yellow_Sulphur)
 Input_Box_message2.config(font=(Font_UI, 10, BOLD))
 Input_Box_message2.place(relx = 0.27, rely = 0.11, anchor = CENTER)
 
-Track_0_info_Button = Label(root, text="Tempo Multiplier:      Tempo (BMP):",bg= Dark_Olive_Slate, fg= Yellow_Sulphur)
+Track_0_info_Button = Label(root, text="Tempo Multiplier:     Tempo (BMP):",bg= Dark_Olive_Slate, fg= Yellow_Sulphur)
 Track_0_info_Button.config(font=(Font_UI, 7, BOLD))
-Track_0_info_Button.place(relx = 0.783, rely = 0.30, anchor = CENTER)
+Track_0_info_Button.place(relx = 0.79, rely = 0.30, anchor = CENTER)
 
 Input_Box_message5 = Label(root, text="Pitch shift:",bg=Dark_Olive_Slate, fg=Yellow_Sulphur)
 Input_Box_message5.config(font=(Font_UI, 8, BOLD))
-Input_Box_message5.place(relx = 0.84, rely = 0.48, anchor = CENTER)
+Input_Box_message5.place(relx = 0.87, rely = 0.48, anchor = CENTER)
 
 Input_Box_message6 = Label(root, text="Higher pitch",bg=Dark_Olive_Slate, fg=Yellow_Sulphur)
 Input_Box_message6.config(font=(Font_UI, 6, BOLD))
-Input_Box_message6.place(relx = 0.84, rely = 0.54, anchor = CENTER)
+Input_Box_message6.place(relx = 0.87, rely = 0.54, anchor = CENTER)
 
 Input_Box_message6 = Label(root, text="Lower pitch",bg=Dark_Olive_Slate, fg=Yellow_Sulphur)
 Input_Box_message6.config(font=(Font_UI, 6, BOLD))
-Input_Box_message6.place(relx = 0.84, rely = 0.823, anchor = CENTER)
+Input_Box_message6.place(relx = 0.87, rely = 0.823, anchor = CENTER)
 
 #Track numbers over.
 
@@ -2136,12 +2303,12 @@ OpenFile_Button.place(relx = 0.74, rely = 0.18, anchor = CENTER, width="180")
 
 VolumeEditor_Button = Button(root, text="Volume\nEditor",bg= Blue_Salvia, fg= Dark_Olive_Slate, command=openNew_volume_Window)
 VolumeEditor_Button.config(font=(Font_UI, 7, BOLD))
-VolumeEditor_Button.place(relx = 0.68, rely = 0.92, anchor = CENTER, width="60", height = "40")
+VolumeEditor_Button.place(relx = 0.71, rely = 0.92, anchor = CENTER, width="60", height = "40")
 
 #info_button = Button(root, text="Instrument list.",bg= Blue_Salvia, fg= Dark_Olive_Slate, command= lambda: TK_Message(instrument_List,"Instrument IDs"))
 #info_button.place(relx = 0.74, rely = 0.9, anchor = CENTER, width="150")
 
 convert_Button2 = Button(root, state= "disabled", text="Convert",bg= Blue_Salvia, fg= Dark_Olive_Slate)
-convert_Button2.place(relx = 0.84, rely = 0.93, anchor = CENTER, width="75")
+convert_Button2.place(relx = 0.87, rely = 0.93, anchor = CENTER, width="75")
 #Convert file
 root.mainloop()
